@@ -1,12 +1,12 @@
 var express = require("express");
 var DataStore = require("nedb");
-var port = 3000;
 var BASE_URL = "/api/v1";
 var json = [{ name: "julio", phone: 21324 }];
 var filename = __dirname + "/contactos.json";
 var cors = require("cors");
-var path = require('path');
-const CONTACTS_APP_DIR = "/dist/contacts-app"; 
+var path = require("path");
+const CONTACTS_APP_DIR = "/dist/contacts-app";
+var port = process.env.PORT || 3000;
 
 var db = new DataStore({
   filename: filename,
@@ -18,9 +18,9 @@ console.log("Starting API server...");
 var app = express();
 app.use(express.json());
 app.use(cors());
-app.use(express.static(path.join(__dirname, CONTACTS_APP_DIR))); 
-app.get('/', function(req, res) { 
-res.sendFile(path.join(__dirname, CONTACTS_APP_DIR, '/index.html')); 
+app.use(express.static(path.join(__dirname, CONTACTS_APP_DIR)));
+app.get("/", function(req, res) {
+  res.sendFile(path.join(__dirname, CONTACTS_APP_DIR, "/index.html"));
 });
 
 app.get(BASE_URL + "/", (req, res) => {
